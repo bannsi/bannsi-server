@@ -39,13 +39,9 @@ spring:
     cloud:
         config:
             enabled: true
-        # gateway:
-        #     routes:
-        #         - id: organizationservice
-        #           uri: lb://ORGANIZATIONSERVICE
-        #           predicates:
-        #             - Path=/v1/organizations/**
-        #         - id: licensingservice
-        #           uri: lb://LICENSINGSERVICE
-        #           predicates:
-        #             - Path=/license/**
+        gateway:
+            routes:
+                - id: peiceservice
+                  uri: lb://PEICESERVICE
+                  predicates:
+                    - Path=/v1/peice/**
