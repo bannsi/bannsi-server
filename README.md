@@ -1,3 +1,3 @@
 # Bannsi Server
-## Gateway
+## Gateway Server
 ## Eureka Server (Service Discovery)
