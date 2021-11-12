@@ -9,8 +9,8 @@ spring:
             server:
                 git:
                     default-label: main
-                    uri: https://github.com/zzzinho/spring-msa
-                    searchPaths: config/licensingservice, config/organizationservice
+                    uri: https://github.com/bannsi/bannsi-server
+                    searchPaths: config/accountservice, config/peiceservice
                 encrypt.enabled: false
 eureka:
     instance:
