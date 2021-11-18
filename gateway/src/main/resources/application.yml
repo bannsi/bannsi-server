@@ -12,7 +12,7 @@ management:
         web:
             exposure:
                 include: 
-                    - "gateway"
+                    - "*"
     endpoint:
         health:
             show-details: always
@@ -44,4 +44,9 @@ spring:
                 - id: peiceservice
                   uri: lb://PEICESERVICE
                   predicates:
-                    - Path=/v1/peice/**
+                    - Path=/peices/**
+                - id: accoutservice
+                  uri: lb://ACCOUNTSERVICE
+                  predicates:
+                    - Path=/accounts/**
+                    
