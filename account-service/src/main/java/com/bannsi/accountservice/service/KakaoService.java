@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 public class KakaoService {
     private static final Logger logger = LoggerFactory.getLogger(KakaoService.class);
     private static final String APIKEY = "057a07ccce2a54f042f9b62e61d4457f";
-    public String getAccessToken(String authCode) {
+    public String getAccessToken(String authCode) throws IOException {
         String accessToken = new String();
         String refreshToken = new String();
         String tokenURL = "https://kauth.kakao.com/oauth/token";
@@ -46,7 +46,7 @@ public class KakaoService {
             if (conn.getResponseCode() != 200) {
                 logger.info("get kakao access token failed: " + String.valueOf(conn.getResponseCode()));
                 logger.info(conn.getResponseMessage());
-                return "error";
+                throw new IOException();
             }
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line = new String();
@@ -72,7 +72,7 @@ public class KakaoService {
         return accessToken;
     }
 
-    public HashMap<String, Object> getUserInfo(String accessToken) {
+    public HashMap<String, Object> getUserInfo(String accessToken) throws IOException {
         HashMap<String, Object> userInfo = new HashMap<String, Object>();
         String userInfoURL = "https://kapi.kakao.com/v2/user/me";
         try {
@@ -81,7 +81,9 @@ public class KakaoService {
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Authorization", "Bearer " + accessToken);
             int responseStatus = conn.getResponseCode();
-
+            if(responseStatus != 200){
+                throw new IOException();
+            }
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
             String line = new String();
@@ -97,9 +99,10 @@ public class KakaoService {
             String kakaoUserId = jsonObject.get("id").getAsString();
             String nickname = jsonObject.get("kakao_account").getAsJsonObject().get("profile").getAsJsonObject().get("nickname").getAsString();
 
+            logger.info("id: " + kakaoUserId + ", nickname: " + nickname);
             userInfo.put("accessToken", accessToken);
             userInfo.put("userId", kakaoUserId);
-            userInfo.put("nickaname", nickname);
+            userInfo.put("nickname", nickname);
         } catch(IOException e){
             e.printStackTrace();;
         }
