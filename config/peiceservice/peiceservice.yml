@@ -1,6 +1,9 @@
 example:
   property: "bannsi peice service config"
 
+server:
+  port: 8081
+
 spring:
   jpa:
     database: "MYSQL"
@@ -19,11 +22,14 @@ spring:
     validationQuery: "SELECT 1"
   database:
     driverClassName: "org.mysql.Driver"
+
 redis:
   server: "redis"
   port: "6379"
+
 signing:
   key: "345345fsdfsf5345"
+
 logging:
   level:
     org:
