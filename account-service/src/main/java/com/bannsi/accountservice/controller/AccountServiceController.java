@@ -52,4 +52,10 @@ public class AccountServiceController {
         
         return ResponseEntity.ok().body(new ResponseDTO("user created", user));
     }
+
+    @RequestMapping(value = "/me", method = RequestMethod.GET)
+    public ResponseEntity<?> getMeInfo(String kakaoId) throws Exception {
+        User user = userService.getUserFromId(kakaoId);
+        return ResponseEntity.ok().body(new ResponseDTO("get user info", user));
+    }
 }

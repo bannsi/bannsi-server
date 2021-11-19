@@ -28,4 +28,12 @@ public class UserService {
         }
         return user;
     }
+
+    public User getUserFromId(String kakaoId) throws Exception{
+        Optional<User> opUser = userRepository.findByKakaoId(kakaoId);
+        if(!opUser.isPresent()){
+            throw new Exception();
+        }
+        return opUser.get();
+    }
 }

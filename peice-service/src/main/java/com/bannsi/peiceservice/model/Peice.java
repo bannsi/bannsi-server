@@ -24,7 +24,7 @@ public class Peice {
     @Column(name="peice_id", nullable = false)    
     private Long peiceId;
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    private String userId;
     @Column(name="title", nullable = false)
     private String title;
     @Column(name="content")
