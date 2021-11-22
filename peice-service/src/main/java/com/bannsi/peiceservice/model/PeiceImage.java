@@ -17,5 +17,4 @@ public class PeiceImage {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="image_id", nullable = false)
     private Long imageId;
-        
 }
