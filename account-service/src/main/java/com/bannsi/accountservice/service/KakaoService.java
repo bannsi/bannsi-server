@@ -62,7 +62,6 @@ public class KakaoService {
             // accessToken = jsonElement.getAsJsonObject().get("access_token").getAsString();
             // refreshToken = jsonElement.getAsJsonObject().get("refresh_token").getAsString();
             accessToken = jsonObject.get("access_token").getAsString();
-
             bufferedReader.close();
             bufferedWriter.close();
         } catch(IOException e) {
