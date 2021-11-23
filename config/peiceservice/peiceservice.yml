@@ -22,7 +22,11 @@ spring:
     validationQuery: "SELECT 1"
   database:
     driverClassName: "org.mysql.Driver"
-
+  profiles:
+    include:
+      - aws
+      - credentials
+      
 redis:
   server: "redis"
   port: "6379"
