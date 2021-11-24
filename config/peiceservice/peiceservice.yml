@@ -43,6 +43,7 @@ spring:
 #             instanceProfile: true
 #             accessKey: "{cipher}49fa3542b2c0fdf9aed98fd00f8facff74f70001ac5f00314df851fe519cbe8112e50030cb978b99f6cdff25745e05d3"
 #             secretKey: "{cipher}d71dad30007945b43ed1548eb1f855a14828af125e231ad2582c2f20490e80a98acf8124f4a9baf1715f7a924957a4bf3717e08cbcce260fc2ea7c289ccc6634"
+
 redis:
   server: "redis"
   port: "6379"

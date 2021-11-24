@@ -36,7 +36,12 @@ public class Peice {
     private Long latitude;
     @Column(name = "longitude", nullable = false)
     private Long longitude;
-
+    
+    public Peice withUserId(String userId){
+        this.setUserId(userId);
+        return this;
+    }
+    
     public Peice withTitle(String title){
         this.setTitle(title);
         return this;

@@ -7,5 +7,5 @@ import com.bannsi.peiceservice.model.Peice;
 import org.springframework.data.repository.CrudRepository;
 
 public interface PeiceRepository extends CrudRepository<Peice,Long>{
-    List<Peice> findByUserId(Long userId);
+    List<Peice> findByUserId(String userId);
 }

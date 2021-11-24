@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.bannsi.peiceservice.DTO.PeiceRequest;
 import com.bannsi.peiceservice.model.Peice;
+import com.bannsi.peiceservice.repository.PeiceImageRepository;
 import com.bannsi.peiceservice.repository.PeiceRepository;
 
 import org.slf4j.Logger;
@@ -20,9 +22,15 @@ public class PeiceService {
     @Autowired
     private PeiceRepository peiceRepository;
     
+    @Autowired
+    private PeiceImageRepository imageRepository;
+
+    @Autowired
+    private ImageService imageService;
+
     private static final Logger logger = LoggerFactory.getLogger(PeiceRepository.class);
 
-    public List<Peice> getPeiceByUserId(Long userId){
+    public List<Peice> findPeiceByUserId(String userId){
         return peiceRepository.findByUserId(userId);
     }
 
@@ -37,7 +45,19 @@ public class PeiceService {
         return oPeice.get();
     }
 
-    public void savePeice(Peice peice, List<MultipartFile> multipartFiles){
+    public Peice savePeice(PeiceRequest peiceRequest, String userId){
+        Peice peice = new Peice()
+            .withUserId(userId)
+            .withTitle(peiceRequest.getTitle())
+            .withContent(peiceRequest.getContent())
+            .withLatitude(peiceRequest.getLatitude())
+            .withLongitude(peiceRequest.getLongitude());
         peiceRepository.save(peice.withCreatedAt(new Date()));
+        
+        for(MultipartFile file : peiceRequest.getImages()){
+            if(file.getOriginalFilename().length() != 0)
+                imageService.uploadImage(file, peice.getPeiceId());
+        }
+        return peice;
     }
 }
