@@ -1,5 +1,6 @@
 package com.bannsi.peiceservice.DTO;
 
+import java.util.Date;
 import java.util.List;
 
 import com.bannsi.peiceservice.model.Peice;
@@ -15,6 +16,7 @@ public class PeiceResponse {
     private String content;
     private Long latitude;
     private Long longitude;
+    private Date createdAt;
     private List<String> images;
 
     public PeiceResponse(Peice peice, List<String> images){
@@ -23,6 +25,7 @@ public class PeiceResponse {
         this.content = peice.getContent();
         this.latitude = peice.getLatitude();
         this.longitude = peice.getLongitude();
+        this.createdAt = peice.getCreatedAt();
         this.images = images;
     }
 }

@@ -42,7 +42,7 @@ public class PeiceController {
 
     private static final Logger logger = LoggerFactory.getLogger(PeiceController.class);
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<?> getPeicesByUserId(@RequestHeader HttpHeaders headers){
         String token = headers.getFirst("Authorization").substring(7);
         String kakaoId = jwtUtil.getUsernameFromToken(token);
