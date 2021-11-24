@@ -4,14 +4,7 @@ server:
 spring:
     main:
         web-application-type: reactive
-    application:
-        name: gatewayservice
-    profiles:
-        active:
-            default
     cloud:
-        config:
-            enabled: true
         gateway:
             routes:
                 - id: peiceservice
