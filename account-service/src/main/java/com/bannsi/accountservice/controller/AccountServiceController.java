@@ -3,6 +3,7 @@ package com.bannsi.accountservice.controller;
 import java.util.HashMap;
 
 import com.bannsi.accountservice.DTO.ResponseDTO;
+import com.bannsi.accountservice.config.JwtUtil;
 import com.bannsi.accountservice.model.User;
 import com.bannsi.accountservice.service.KakaoService;
 import com.bannsi.accountservice.service.UserService;
@@ -10,8 +11,10 @@ import com.bannsi.accountservice.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +29,9 @@ public class AccountServiceController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String hello(){
@@ -49,12 +55,14 @@ public class AccountServiceController {
         User user = userService.CreateUser(
             String.valueOf(userInfo.get("userId")), 
             String.valueOf(userInfo.get("nickname")));
-        
-        return ResponseEntity.ok().body(new ResponseDTO("user created", user));
+        String token = jwtUtil.generateToken(user);
+        return ResponseEntity.ok().body(new ResponseDTO("user created", token));
     }
 
     @RequestMapping(value = "/me", method = RequestMethod.GET)
-    public ResponseEntity<?> getMeInfo(String kakaoId) throws Exception {
+    public ResponseEntity<?> getMeInfo(@RequestHeader HttpHeaders headers) throws Exception {
+        String token = headers.getFirst("Authorization").substring(7);
+        String kakaoId = jwtUtil.getUsernameFromToken(token);
         User user = userService.getUserFromId(kakaoId);
         return ResponseEntity.ok().body(new ResponseDTO("get user info", user));
     }
