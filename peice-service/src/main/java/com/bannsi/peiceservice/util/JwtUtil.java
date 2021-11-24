@@ -1,4 +1,4 @@
-package com.bannsi.accountservice.config;
+package com.bannsi.peiceservice.util;
 
 import java.util.Date;
 import java.util.function.Function;
@@ -11,8 +11,6 @@ import io.jsonwebtoken.Jwts;
 
 @Component
 public class JwtUtil {
-    private static final long JWT_TOKEN_VALIDITY = 90 * 24 * 60 * 60;
-
     @Value("${jwt.secret}")       
     private String secret;
 

@@ -9,15 +9,18 @@ import com.bannsi.peiceservice.DTO.ResponseDTO;
 import com.bannsi.peiceservice.model.Peice;
 import com.bannsi.peiceservice.service.ImageService;
 import com.bannsi.peiceservice.service.PeiceService;
+import com.bannsi.peiceservice.util.JwtUtil;
 
 import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,11 +37,16 @@ public class PeiceController {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     private static final Logger logger = LoggerFactory.getLogger(PeiceController.class);
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getPeicesByUserId(@PathVariable String userId){
-        List<Peice> peices = peiceService.findPeiceByUserId(userId);
+    public ResponseEntity<?> getPeicesByUserId(@RequestHeader HttpHeaders headers){
+        String token = headers.getFirst("Authorization").substring(7);
+        String kakaoId = jwtUtil.getUsernameFromToken(token);
+        List<Peice> peices = peiceService.findPeiceByUserId(kakaoId);
         List<PeiceResponse> peiceResponses = new ArrayList<>();
         for(Peice peice : peices){
             peiceResponses.add(new PeiceResponse(peice, imageService.getImageUrl(peice.getPeiceId())));
@@ -47,8 +55,10 @@ public class PeiceController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity<?> savePeice(@ModelAttribute PeiceRequest peiceRequest){
-        peiceService.savePeice(peiceRequest, "test user id");
+    public ResponseEntity<?> savePeice(@RequestHeader HttpHeaders headers, @ModelAttribute PeiceRequest peiceRequest){
+        String token = headers.getFirst("Authorization").substring(7);
+        String kakaoId = jwtUtil.getUsernameFromToken(token);
+        peiceService.savePeice(peiceRequest, kakaoId);
         return ResponseEntity.ok().body(new ResponseDTO("peice is saved", null));
     }
 
