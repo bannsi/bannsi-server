@@ -1,12 +1,14 @@
 package com.bannsi.peiceservice.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -36,6 +38,8 @@ public class Peice {
     private Long latitude;
     @Column(name = "longitude", nullable = false)
     private Long longitude;
+    @OneToMany
+    private List<Keyword> keywords;
     
     public Peice withUserId(String userId){
         this.setUserId(userId);
