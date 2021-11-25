@@ -1,9 +1,9 @@
 spring:
     application:
-        name: accountservice
+        name: collectionservice
     profiles:
         active:
             default
     cloud:
         config:
-            uri: http://3.36.116.95:8888
+            uri: http://3.35.50.79:8888
