@@ -18,4 +18,8 @@ spring:
                   uri: lb://ACCOUNTSERVICE
                   predicates:
                     - Path=/accounts/**
+                - id: collectionservice
+                  uri: lb://COLLECTIONSERVICE
+                  predicates:
+                    - Path;/collections/**
                     
