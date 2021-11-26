@@ -8,6 +8,7 @@ import com.bannsi.peiceservice.repository.KeywordRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,5 +23,11 @@ public class KeywordController {
     public ResponseEntity<?> listKeywords(){
         List<Keyword> keywords = keywordRepository.findAll();
         return ResponseEntity.ok().body(new ResponseDTO("keywords", keywords));
+    }
+    
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public ResponseEntity<?> createKeyword(@RequestBody Keyword keyword){
+        keywordRepository.save(keyword);
+        return ResponseEntity.ok().body(new ResponseDTO("keyword is created", keyword));
     }
 }

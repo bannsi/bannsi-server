@@ -1,13 +1,18 @@
 package com.bannsi.peiceservice.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import com.bannsi.peiceservice.DTO.PeiceRequest;
+import com.bannsi.peiceservice.model.Keyword;
 import com.bannsi.peiceservice.model.Peice;
+import com.bannsi.peiceservice.model.WhoKeyword;
+import com.bannsi.peiceservice.repository.KeywordRepository;
 import com.bannsi.peiceservice.repository.PeiceImageRepository;
 import com.bannsi.peiceservice.repository.PeiceRepository;
+import com.bannsi.peiceservice.repository.WhoKeywordRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +31,19 @@ public class PeiceService {
     private PeiceImageRepository imageRepository;
 
     @Autowired
+    private KeywordRepository keywordRepository;
+
+    @Autowired
+    private WhoKeywordRepository whoKeywordRepository;
+
+    @Autowired
     private ImageService imageService;
 
     private static final Logger logger = LoggerFactory.getLogger(PeiceRepository.class);
+
+    // public Peice getPieceByPeiceId(Long peiceId){
+
+    // }
 
     public List<Peice> findPeiceByUserId(String userId){
         return peiceRepository.findByUserId(userId);
@@ -49,9 +64,32 @@ public class PeiceService {
         Peice peice = new Peice()
             .withUserId(userId)
             .withTitle(peiceRequest.getTitle())
+            .withDate(peiceRequest.getDate())
             .withContent(peiceRequest.getContent())
             .withLatitude(peiceRequest.getLatitude())
-            .withLongitude(peiceRequest.getLongitude());
+            .withLongitude(peiceRequest.getLongitude())
+            .withPlaceUrl(peiceRequest.getPlaceUrl())
+            .withAddress(peiceRequest.getAddress())
+            .withAddressDetail(peiceRequest.getAddressDetail());
+        List<Keyword> keywords = new ArrayList<Keyword>();
+        
+        for(Long keyword_id : peiceRequest.getKeywords()){
+            Optional<Keyword> keyword = keywordRepository.findById(keyword_id);
+            if(keyword.isPresent()){
+                keywords.add(keyword.get());
+            }
+        }
+        peice.setKeywords(keywords);
+
+        List<WhoKeyword> whos = new ArrayList<WhoKeyword>();
+        for(Long who_id : peiceRequest.getWhos()){
+            Optional<WhoKeyword> who = whoKeywordRepository.findById(who_id);
+            if(who.isPresent()){
+                whos.add(who.get());
+            }
+        }
+        peice.setWhos(whos);
+        
         peiceRepository.save(peice.withCreatedAt(new Date()));
         
         for(MultipartFile file : peiceRequest.getImages()){

@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -31,6 +31,8 @@ public class Peice {
     private String title;
     @Column(name="content")
     private String content;
+    @Column(name = "date", nullable = false)
+    private Date date;
     @CreatedDate
     @Column(name="created_at", nullable = false)
     private Date createdAt;
@@ -38,8 +40,17 @@ public class Peice {
     private Long latitude;
     @Column(name = "longitude", nullable = false)
     private Long longitude;
-    @OneToMany
+    @Column(name = "address", nullable = false)
+    private String address;
+    @Column(name = "address_detail", nullable = false)
+    private String addressDetail;
+    @Column(name = "place_url", nullable = false)
+    private String placeUrl;
+    @ManyToMany
     private List<Keyword> keywords;
+    @ManyToMany
+    private List<WhoKeyword> whos;
+    
     
     public Peice withUserId(String userId){
         this.setUserId(userId);
@@ -51,6 +62,11 @@ public class Peice {
         return this;
     }
     
+    public Peice withDate(Date date){
+        this.setDate(date);
+        return this;
+    }
+
     public Peice withContent(String content){
         this.setContent(content);
         return this;
@@ -63,6 +79,21 @@ public class Peice {
 
     public Peice withLongitude(Long longitude){
         this.setLongitude(longitude);
+        return this;
+    }
+
+    public Peice withAddress(String address){
+        this.setAddress(address);
+        return this;
+    }
+
+    public Peice withAddressDetail(String addressDetail){
+        this.setAddressDetail(addressDetail);
+        return this;
+    }
+
+    public Peice withPlaceUrl(String placeUrl){
+        this.placeUrl = placeUrl;
         return this;
     }
 

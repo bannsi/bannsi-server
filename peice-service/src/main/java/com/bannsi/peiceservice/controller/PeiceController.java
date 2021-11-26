@@ -8,6 +8,7 @@ import com.bannsi.peiceservice.DTO.PeiceResponse;
 import com.bannsi.peiceservice.DTO.ResponseDTO;
 import com.bannsi.peiceservice.model.Peice;
 import com.bannsi.peiceservice.service.ImageService;
+import com.bannsi.peiceservice.service.KeywordService;
 import com.bannsi.peiceservice.service.PeiceService;
 import com.bannsi.peiceservice.util.JwtUtil;
 
@@ -38,6 +39,9 @@ public class PeiceController {
     private ImageService imageService;
 
     @Autowired
+    private KeywordService keywordService;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
     private static final Logger logger = LoggerFactory.getLogger(PeiceController.class);
@@ -46,10 +50,11 @@ public class PeiceController {
     public ResponseEntity<?> getPeicesByUserId(@RequestHeader HttpHeaders headers){
         String token = headers.getFirst("Authorization").substring(7);
         String kakaoId = jwtUtil.getUsernameFromToken(token);
+        logger.info(kakaoId);
         List<Peice> peices = peiceService.findPeiceByUserId(kakaoId);
         List<PeiceResponse> peiceResponses = new ArrayList<>();
         for(Peice peice : peices){
-            peiceResponses.add(new PeiceResponse(peice, imageService.getImageUrl(peice.getPeiceId())));
+            peiceResponses.add(new PeiceResponse(peice, imageService.getImageUrl(peice.getPeiceId()), peice.getKeywords(), peice.getWhos()));
         }
         return ResponseEntity.ok().body(new ResponseDTO("get peices by user id", peiceResponses));
     }
@@ -58,9 +63,16 @@ public class PeiceController {
     public ResponseEntity<?> savePeice(@RequestHeader HttpHeaders headers, @ModelAttribute PeiceRequest peiceRequest){
         String token = headers.getFirst("Authorization").substring(7);
         String kakaoId = jwtUtil.getUsernameFromToken(token);
-        peiceService.savePeice(peiceRequest, kakaoId);
-        return ResponseEntity.ok().body(new ResponseDTO("peice is saved", null));
+        peiceRequest.setTitle("tmp title");
+        Peice peice = peiceService.savePeice(peiceRequest, kakaoId);
+
+        return ResponseEntity.ok().body(new ResponseDTO("peice is saved", new PeiceResponse(peice, imageService.getImageUrl(peice.getPeiceId()), peice.getKeywords(), peice.getWhos())));
     }
+    // TODO: restTemplate get Peice from peiceId
+    // @RequestMapping(value = "/{peiceId}", method = RequestMethod.GET)
+    // public PeiceResponse getPeice(@PathVariable Long peiceIdLong){
+    //     Peice peice = peiceService
+    // }
 
     @RequestMapping(value="/{peiceId}/", method=RequestMethod.PUT)
     public ResponseEntity<?> updatePeice(@PathVariable Long peiceId, @RequestBody Peice peice) {
