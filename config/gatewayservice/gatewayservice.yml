@@ -6,6 +6,23 @@ spring:
         web-application-type: reactive
     cloud:
         gateway:
+          globalcors:
+            corsConfigurations:
+              '[/**]':
+                allowedOrigins: "*"
+                allowedHeaders:
+                  - x-requested-with
+                  - authorization
+                  - content-type
+                  - credential
+                  - X-AUTH-TOKEN
+                  - X-CSRF-TOKEN
+                allowedMethods:
+                  - POST
+                  - GET
+                  - PUT
+                  - OPTIONS
+                  - DELETE
             discovery:
                 locator:
                     enabled: true
@@ -22,4 +39,3 @@ spring:
                   uri: lb://COLLECTIONSERVICE
                   predicates:
                     - Path=/collections/**
-                    
