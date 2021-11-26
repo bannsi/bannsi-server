@@ -1,5 +1,6 @@
 package com.bannsi.peiceservice.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,9 +42,11 @@ public class PeiceService {
 
     private static final Logger logger = LoggerFactory.getLogger(PeiceRepository.class);
 
-    // public Peice getPieceByPeiceId(Long peiceId){
-
-    // }
+    public Peice getPieceByPeiceId(Long peiceId) throws IOException {
+        Optional<Peice> peice = peiceRepository.findById(peiceId);
+        if(!peice.isPresent()) throw new IOException();
+        return peice.get();
+    }
 
     public List<Peice> findPeiceByUserId(String userId){
         return peiceRepository.findByUserId(userId);

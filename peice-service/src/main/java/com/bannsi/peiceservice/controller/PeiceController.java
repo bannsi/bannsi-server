@@ -1,5 +1,6 @@
 package com.bannsi.peiceservice.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,10 +70,11 @@ public class PeiceController {
         return ResponseEntity.ok().body(new ResponseDTO("peice is saved", new PeiceResponse(peice, imageService.getImageUrl(peice.getPeiceId()), peice.getKeywords(), peice.getWhos())));
     }
     // TODO: restTemplate get Peice from peiceId
-    // @RequestMapping(value = "/{peiceId}", method = RequestMethod.GET)
-    // public PeiceResponse getPeice(@PathVariable Long peiceIdLong){
-    //     Peice peice = peiceService
-    // }
+    @RequestMapping(value = "/{peiceId}", method = RequestMethod.GET)
+    public PeiceResponse getPeice(@PathVariable Long peiceId) throws IOException {
+        Peice peice =  peiceService.getPieceByPeiceId(peiceId);
+        return new PeiceResponse(peice, imageService.getImageUrl(peice.getPeiceId()), peice.getKeywords(), peice.getWhos());
+    }
 
     @RequestMapping(value="/{peiceId}/", method=RequestMethod.PUT)
     public ResponseEntity<?> updatePeice(@PathVariable Long peiceId, @RequestBody Peice peice) {
