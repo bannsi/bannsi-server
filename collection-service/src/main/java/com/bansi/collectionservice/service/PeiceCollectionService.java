@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.bansi.collectionservice.DTO.ItemResponse;
+import com.bansi.collectionservice.DTO.PeiceCollectionResponse;
 import com.bansi.collectionservice.client.PeiceRestTemplateClient;
 import com.bansi.collectionservice.model.Item;
 import com.bansi.collectionservice.model.Peice;
@@ -30,14 +32,21 @@ public class PeiceCollectionService {
         Peice peice = peiceRestTemplateClient.getPeice(peiceId);
         return peice;
     }
-
-    public PeiceCollection getCollection(Long collectionId) throws IOException {
+    
+    public PeiceCollectionResponse getCollection(Long collectionId) throws IOException {
         Optional<PeiceCollection> peiceCollection = collectionRepository.findByCollectionId(collectionId);
-        if(peiceCollection.isPresent()) throw new IOException();
-        List<Peice> peice = new ArrayList<Peice>();
+        logger.info(peiceCollection.get().getTitle());
+        if(!peiceCollection.isPresent()) throw new IOException();
+        // List<Peice> peices = new ArrayList<Peice>();
+        List<ItemResponse> items = new ArrayList<ItemResponse>();
         for(Item item : peiceCollection.get().getItems()){
-            peice.add(getPeice(item.getPeiceId()));
+            Peice peice = null;
+            if(item.getPeiceId() != null)
+                peice = getPeice(item.getPeiceId());
+            items.add(new ItemResponse(item.getContent(), peice, item.getOrderNum(), item.getDate()));
+
+            // peices.add(getPeice(item.getPeiceId()));
         }
-        return peiceCollection.get();
+        return new PeiceCollectionResponse(peiceCollection.get().getTitle(), items);
     }
 }

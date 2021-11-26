@@ -1,5 +1,6 @@
 package com.bansi.collectionservice.model;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.Getter;
@@ -9,7 +10,14 @@ import lombok.Setter;
 @Setter
 public class Peice {
     private Long peiceId;
-    private String title;
     private String content;
+    private Long latitude;
+    private Long longitude;
+    private String address;
+    private String addressDetail;
+    private String placeUrl;
+    private Date date;
     private List<String> images;
+    private List<String> keywords;
+    private List<String> whos;
 }

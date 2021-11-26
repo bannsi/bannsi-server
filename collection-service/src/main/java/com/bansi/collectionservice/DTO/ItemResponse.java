@@ -4,14 +4,16 @@ import java.util.Date;
 
 import com.bansi.collectionservice.model.Peice;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ItemWithPeice {
+@AllArgsConstructor
+public class ItemResponse {
     private String content;
     private Peice peice;
-    private Integer orderNumm;
-    private Date date;
+    private Integer orderNum;
+    private Date date;    
 }

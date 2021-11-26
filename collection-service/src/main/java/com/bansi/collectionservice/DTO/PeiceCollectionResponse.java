@@ -2,14 +2,14 @@ package com.bansi.collectionservice.DTO;
 
 import java.util.List;
 
-import com.bansi.collectionservice.model.Item;
-
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class PCollectionDTO {
+@AllArgsConstructor
+public class PeiceCollectionResponse {
     private String title;
-    private List<Item> items;
+    private List<ItemResponse> items;    
 }

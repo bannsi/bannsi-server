@@ -14,7 +14,7 @@ public class PeiceRestTemplateClient {
     private RestTemplate restTemplate;
 
     public Peice getPeice(Long peiceId){
-        ResponseEntity<Peice> restExchange = restTemplate.exchange("http//peiceservice/peice/v1/{peiceId}", HttpMethod.GET, null, Peice.class, peiceId);
+        ResponseEntity<Peice> restExchange = restTemplate.exchange("http://peiceservice/peices/v1/rt/{peiceId}", HttpMethod.GET, null, Peice.class, peiceId);
         return restExchange.getBody();
     }
 }
