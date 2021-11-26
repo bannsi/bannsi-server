@@ -25,6 +25,14 @@ spring:
     validationQuery: "SELECT 1"
   database:
     driverClassName: "org.mysql.Driver"
+  profiles:
+    include:
+      - aws
+      - credentials
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 redis:
   server: "redis"
