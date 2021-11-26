@@ -6,4 +6,4 @@ spring:
             default
     cloud:
         config:
-            uri: http://3.35.50.79:8888
+            uri: http://3.36.116.95:8888
