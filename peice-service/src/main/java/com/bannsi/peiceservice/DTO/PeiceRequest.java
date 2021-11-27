@@ -17,12 +17,12 @@ public class PeiceRequest {
     @DateTimeFormat(iso = ISO.DATE)
     private Date date;
     private String content;
-    private Long latitude;
-    private Long longitude;
+    private Double latitude;
+    private Double longitude;
     private String address;
     private String addressDetail;
     private String placeUrl;
     private List<MultipartFile> images;
-    private List<Long> keywords;
-    private List<Long> whos;
+    private String keywords;
+    private String whos;
 }

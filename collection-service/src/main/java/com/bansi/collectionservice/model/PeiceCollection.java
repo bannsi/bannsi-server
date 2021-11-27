@@ -1,5 +1,6 @@
 package com.bansi.collectionservice.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -28,6 +29,12 @@ public class PeiceCollection {
     private String userId;
     @Column(name = "title")
     private String title;
+    @Column(name = "cover_image")
+    private String coverImage;
+    @Column(name = "start_date")
+    private Date startDate;
+    @Column(name = "end_date")
+    private Date endDate;
     @OneToMany
     List<Item> items;
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.bannsi.peiceservice.model.Keyword;
 import com.bannsi.peiceservice.model.Peice;
+import com.bannsi.peiceservice.model.User;
 import com.bannsi.peiceservice.model.WhoKeyword;
 
 import lombok.Getter;
@@ -15,9 +16,10 @@ import lombok.Setter;
 @Setter
 public class PeiceResponse {
     private Long peiceId;
+    private User user;
     private String content;
-    private Long latitude;
-    private Long longitude;
+    private Double latitude;
+    private Double longitude;
     private String address;
     private String addressDetail;
     private String placeUrl;
@@ -27,8 +29,9 @@ public class PeiceResponse {
     private List<String> keywords;
     private List<String> whos;
 
-    public PeiceResponse(Peice peice, List<String> images, List<Keyword> keywords, List<WhoKeyword> whos){
+    public PeiceResponse(Peice peice, User user, List<String> images, List<Keyword> keywords, List<WhoKeyword> whos){
         this.peiceId = peice.getPeiceId();
+        this.user = user;
         this.content = peice.getContent();
         this.latitude = peice.getLatitude();
         this.longitude = peice.getLongitude();

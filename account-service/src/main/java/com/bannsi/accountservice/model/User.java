@@ -18,16 +18,13 @@ public class User {
     @Id
     @Column(name = "kakao_id", nullable = false)
     private String kakaoId;
-
     @Column(name = "nickname", nullable = false)
     private String nickname;
-    
     @Column(name = "enabled", nullable = false)
     private boolean enabled = true;
-
     @Column(name="created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
-
+    
     public User withKakaoId(String kakaoId) {
         this.kakaoId = kakaoId;
         return this;

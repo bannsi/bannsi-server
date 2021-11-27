@@ -1,5 +1,6 @@
 package com.bansi.collectionservice.DTO;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -10,6 +11,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class PeiceCollectionResponse {
+    private Long id;
     private String title;
+    private String coverImage;
+    private Date startDate;
+    private Date endDate;
     private List<ItemResponse> items;    
 }

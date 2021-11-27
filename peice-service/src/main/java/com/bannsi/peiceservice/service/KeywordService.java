@@ -25,4 +25,9 @@ public class KeywordService {
         }
         return keywords;
     }
+
+    public void deletKeyword(Long keywordId){
+        Optional<Keyword> keyword = keywordRepository.findById(keywordId);
+        keywordRepository.delete(keyword.get());
+    }
 }

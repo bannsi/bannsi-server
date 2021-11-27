@@ -1,11 +1,14 @@
 package com.bannsi.peiceservice.controller;
 
+import java.util.Optional;
+
 import com.bannsi.peiceservice.DTO.ResponseDTO;
 import com.bannsi.peiceservice.model.WhoKeyword;
 import com.bannsi.peiceservice.repository.WhoKeywordRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,4 +31,11 @@ public class WhoKeywordController {
         whoKeywordRepository.save(who);
         return ResponseEntity.ok().body(new ResponseDTO("whoKeyword is created", who));
     }   
+
+    @RequestMapping(value = "/{whoId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteWho(@PathVariable Long whoId){
+        Optional<WhoKeyword> whoKeyword = whoKeywordRepository.findById(whoId);
+        whoKeywordRepository.delete(whoKeyword.get());
+        return ResponseEntity.ok().body(new ResponseDTO("deleted", null));
+    }
 }

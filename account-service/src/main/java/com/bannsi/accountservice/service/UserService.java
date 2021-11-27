@@ -36,4 +36,11 @@ public class UserService {
         }
         return opUser.get();
     }
+    
+    public User updateUser(String kakaoId, User newUser) throws Exception{
+        User user = getUserFromId(kakaoId);
+        user.setNickname(newUser.getNickname());
+        userRepository.save(user);
+        return user;
+    }
 }

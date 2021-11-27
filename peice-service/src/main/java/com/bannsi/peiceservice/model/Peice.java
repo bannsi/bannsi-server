@@ -37,9 +37,9 @@ public class Peice {
     @Column(name="created_at", nullable = false)
     private Date createdAt;
     @Column(name = "latitude", nullable = false)
-    private Long latitude;
+    private Double latitude;
     @Column(name = "longitude", nullable = false)
-    private Long longitude;
+    private Double longitude;
     @Column(name = "address", nullable = false)
     private String address;
     @Column(name = "address_detail", nullable = false)
@@ -72,12 +72,12 @@ public class Peice {
         return this;
     }
 
-    public Peice withLatitude(Long latitude){
+    public Peice withLatitude(Double latitude){
         this.setLatitude(latitude);
         return this;
     }
 
-    public Peice withLongitude(Long longitude){
+    public Peice withLongitude(Double longitude){
         this.setLongitude(longitude);
         return this;
     }

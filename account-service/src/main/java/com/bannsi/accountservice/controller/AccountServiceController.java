@@ -14,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 @RequestMapping(value = "/accounts/v1")
@@ -66,4 +68,13 @@ public class AccountServiceController {
         User user = userService.getUserFromId(kakaoId);
         return ResponseEntity.ok().body(new ResponseDTO("get user info", user));
     }
+
+    @RequestMapping(value="/me/", method=RequestMethod.PUT)
+    public ResponseEntity<?> requestMethodName(@RequestHeader HttpHeaders headers, @RequestBody User newUser) throws Exception{
+        String token = headers.getFirst("Authorization").substring(7);
+        String kakaoId = jwtUtil.getUsernameFromToken(token);
+        User user = userService.updateUser(kakaoId, newUser);
+        return ResponseEntity.ok().body(new ResponseDTO("user nickcname chnaged", user));
+    }
+    
 }
