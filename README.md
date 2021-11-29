@@ -1,4 +1,6 @@
 # Bannsi Server
+- MSA
+- Spring
 ## Gateway Server
 ## Eureka Server (Service Discovery)
 ## Config Sever
