@@ -10,7 +10,7 @@ spring:
                 git:
                     default-label: main
                     uri: https://github.com/bannsi/bannsi-server
-                    searchPaths: config/accountservice, config/peiceservice, config/gatewayservice, config/collectionservice
+                    searchPaths: config/accountservice, config/pieceservice, config/gatewayservice, config/collectionservice
                 encrypt.enabled: false
 eureka:
     instance:

@@ -1,9 +1,0 @@
-spring:
-    application:
-        name: peiceservice
-    profiles:
-        active:
-            default
-    cloud:
-        config:
-            uri: http://3.35.26.133:8888
