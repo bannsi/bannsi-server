@@ -1,5 +1,5 @@
 example:
-  property: "bannsi peice service config"
+  property: "bannsi piece service config"
 
 server:
   port: 8081
