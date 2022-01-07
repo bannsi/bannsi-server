@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bansi.collectionservice.DTO.PeiceCollectionRequest;
-import com.bansi.collectionservice.DTO.PeiceCollectionResponse;
+import com.bansi.collectionservice.DTO.PieceCollectionRequest;
+import com.bansi.collectionservice.DTO.PieceCollectionResponse;
 import com.bansi.collectionservice.DTO.ResponseDTO;
-import com.bansi.collectionservice.model.PeiceCollection;
+import com.bansi.collectionservice.model.PieceCollection;
 import com.bansi.collectionservice.repository.ItemRepository;
-import com.bansi.collectionservice.repository.PeiceCollectionRepository;
-import com.bansi.collectionservice.service.PeiceCollectionService;
+import com.bansi.collectionservice.repository.PieceCollectionRepository;
+import com.bansi.collectionservice.service.PieceCollectionService;
 import com.bansi.collectionservice.utils.JwtUtil;
 
 import org.slf4j.Logger;
@@ -35,10 +35,10 @@ public class CollectionController {
     private JwtUtil jwtUtil;
     
     @Autowired
-    private PeiceCollectionService collectionService;
+    private PieceCollectionService collectionService;
 
     @Autowired
-    private PeiceCollectionRepository collectionRepository;
+    private PieceCollectionRepository collectionRepository;
 
     @Autowired
     private ItemRepository itemRepository;
@@ -49,17 +49,17 @@ public class CollectionController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity<?> createCollection(@RequestHeader HttpHeaders headers, @RequestBody PeiceCollectionRequest collectionRequest){
+    public ResponseEntity<?> createCollection(@RequestHeader HttpHeaders headers, @RequestBody PieceCollectionRequest collectionRequest){
         String token = headers.getFirst("Authorization").substring(7);
         String userId = jwtUtil.getUsernameFromToken(token);
-        PeiceCollection peiceCollection = collectionService.saveCollection(userId, collectionRequest);
+        PieceCollection pieceCollection = collectionService.saveCollection(userId, collectionRequest);
 
-        return ResponseEntity.ok().body(new ResponseDTO("test", peiceCollection));
+        return ResponseEntity.ok().body(new ResponseDTO("test", pieceCollection));
     }
 
     @RequestMapping(value = "/{collectionId}", method = RequestMethod.GET)
     public ResponseEntity<?> getCollection(@PathVariable Long collectionId) throws IOException{
-        PeiceCollectionResponse collectionResponse = null;
+        PieceCollectionResponse collectionResponse = null;
         // collectionResponse = collectionService.getCollection(collectionId);    
         try {
             collectionResponse = collectionService.getCollection(collectionId);    
@@ -71,9 +71,9 @@ public class CollectionController {
 
     @RequestMapping(value="/user/{userId}", method=RequestMethod.GET)
     public ResponseEntity<?> listCollection(@PathVariable String userId) {
-        List<PeiceCollection> collections = collectionService.listCollections(userId);
-        List<PeiceCollectionResponse> collectionResponses = new ArrayList<>();
-        for(PeiceCollection collection : collections){
+        List<PieceCollection> collections = collectionService.listCollections(userId);
+        List<PieceCollectionResponse> collectionResponses = new ArrayList<>();
+        for(PieceCollection collection : collections){
             try{
                 collectionResponses.add(collectionService.getCollection(collection.getCollectionId()));
             } catch (Exception e){

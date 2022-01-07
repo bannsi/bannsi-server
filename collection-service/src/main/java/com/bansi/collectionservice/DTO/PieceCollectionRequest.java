@@ -13,7 +13,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PeiceCollectionRequest {
+public class PieceCollectionRequest {
     private String title;
     // private MultipartFile coverImage;
     private String coverImage;

@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class PeiceCollectionResponse {
+public class PieceCollectionResponse {
     private Long id;
     private String title;
     private String coverImage;

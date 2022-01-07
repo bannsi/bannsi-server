@@ -12,14 +12,14 @@ import java.util.UUID;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.bansi.collectionservice.DTO.ItemResponse;
-import com.bansi.collectionservice.DTO.PeiceCollectionRequest;
-import com.bansi.collectionservice.DTO.PeiceCollectionResponse;
-import com.bansi.collectionservice.client.PeiceRestTemplateClient;
+import com.bansi.collectionservice.DTO.PieceCollectionRequest;
+import com.bansi.collectionservice.DTO.PieceCollectionResponse;
+import com.bansi.collectionservice.client.PieceRestTemplateClient;
 import com.bansi.collectionservice.model.Item;
-import com.bansi.collectionservice.model.Peice;
-import com.bansi.collectionservice.model.PeiceCollection;
+import com.bansi.collectionservice.model.Piece;
+import com.bansi.collectionservice.model.PieceCollection;
 import com.bansi.collectionservice.repository.ItemRepository;
-import com.bansi.collectionservice.repository.PeiceCollectionRepository;
+import com.bansi.collectionservice.repository.PieceCollectionRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,14 +31,14 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class PeiceCollectionService {
-    private static final Logger logger = LoggerFactory.getLogger(PeiceCollectionService.class);
+public class PieceCollectionService {
+    private static final Logger logger = LoggerFactory.getLogger(PieceCollectionService.class);
     
     @Autowired
-    private PeiceCollectionRepository collectionRepository;
+    private PieceCollectionRepository collectionRepository;
 
     @Autowired
-    private PeiceRestTemplateClient peiceRestTemplateClient;
+    private PieceRestTemplateClient pieceRestTemplateClient;
 
     @Autowired
     private UploadService uploadService;
@@ -46,9 +46,9 @@ public class PeiceCollectionService {
     @Autowired
     private ItemRepository itemRepository;
 
-    private Peice getPeice(Long peiceId){
-        Peice peice = peiceRestTemplateClient.getPeice(peiceId);
-        return peice;
+    private Piece getPiece(Long pieceId){
+        Piece piece = pieceRestTemplateClient.getPiece(pieceId);
+        return piece;
     }
 
     private String getFileExtension(String filename){
@@ -79,30 +79,30 @@ public class PeiceCollectionService {
         return uploadService.getFileUrl(filename);
     }
 
-    public PeiceCollectionResponse getCollection(Long collectionId) throws IOException {
-        Optional<PeiceCollection> peiceCollection = collectionRepository.findByCollectionId(collectionId);
-        logger.info(peiceCollection.get().getTitle());
-        if(!peiceCollection.isPresent()) throw new IOException();
-        // List<Peice> peices = new ArrayList<Peice>();
+    public PieceCollectionResponse getCollection(Long collectionId) throws IOException {
+        Optional<PieceCollection> pieceCollection = collectionRepository.findByCollectionId(collectionId);
+        logger.info(pieceCollection.get().getTitle());
+        if(!pieceCollection.isPresent()) throw new IOException();
+        // List<Piece> pieces = new ArrayList<Piece>();
         List<ItemResponse> items = new ArrayList<ItemResponse>();
-        for(Item item : peiceCollection.get().getItems()){
-            Peice peice = null;
-            if(item.getPeiceId() != null)
-                peice = getPeice(item.getPeiceId());
-            items.add(new ItemResponse(item.getContent(), peice, item.getOrderNum(), item.getDate()));
+        for(Item item : pieceCollection.get().getItems()){
+            Piece piece = null;
+            if(item.getPieceId() != null)
+                piece = getPiece(item.getPieceId());
+            items.add(new ItemResponse(item.getContent(), piece, item.getOrderNum(), item.getDate()));
 
-            // peices.add(getPeice(item.getPeiceId()));
+            // pieces.add(getPiece(item.getPieceId()));
         }
-        return new PeiceCollectionResponse(
-            peiceCollection.get().getCollectionId(),
-            peiceCollection.get().getTitle(), 
-            peiceCollection.get().getCoverImage(),
-            peiceCollection.get().getStartDate(),
-            peiceCollection.get().getEndDate(),
+        return new PieceCollectionResponse(
+            pieceCollection.get().getCollectionId(),
+            pieceCollection.get().getTitle(), 
+            pieceCollection.get().getCoverImage(),
+            pieceCollection.get().getStartDate(),
+            pieceCollection.get().getEndDate(),
             items);
     }
 
-    public PeiceCollection saveCollection(String userId, PeiceCollectionRequest collectionRequest){
+    public PieceCollection saveCollection(String userId, PieceCollectionRequest collectionRequest){
         Map<Date, List<Item>> dateItemMap = new HashMap<>();
         List<Item> totalItems = new ArrayList<>();
         for(Item item : collectionRequest.getItems()){
@@ -117,25 +117,25 @@ public class PeiceCollectionService {
             }
             totalItems.add(item);
         }
-        PeiceCollection peiceCollection = new PeiceCollection();
-        peiceCollection.setTitle(collectionRequest.getTitle());
-        peiceCollection.setUserId(userId);
-        peiceCollection.setStartDate(collectionRequest.getStartDate());
-        peiceCollection.setEndDate(collectionRequest.getEndDate());
-        peiceCollection.setItems(totalItems);
-        peiceCollection.setCoverImage(collectionRequest.getCoverImage());
+        PieceCollection pieceCollection = new PieceCollection();
+        pieceCollection.setTitle(collectionRequest.getTitle());
+        pieceCollection.setUserId(userId);
+        pieceCollection.setStartDate(collectionRequest.getStartDate());
+        pieceCollection.setEndDate(collectionRequest.getEndDate());
+        pieceCollection.setItems(totalItems);
+        pieceCollection.setCoverImage(collectionRequest.getCoverImage());
         itemRepository.saveAll(totalItems);
         // String filename = UUID.randomUUID().toString() + "/" + createFilename(collectionRequest.getCoverImage().getOriginalFilename());
         
-        collectionRepository.save(peiceCollection);   
+        collectionRepository.save(pieceCollection);   
 
         // uploadImage(collectionRequest.getCoverImage(), filename);
 
-        return peiceCollection;
+        return pieceCollection;
     }
 
-    public List<PeiceCollection> listCollections(String userId){
-        List<PeiceCollection> collections = collectionRepository.findByUserId(userId);
+    public List<PieceCollection> listCollections(String userId){
+        List<PieceCollection> collections = collectionRepository.findByUserId(userId);
         return collections;   
     }
 }

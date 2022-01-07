@@ -19,8 +19,8 @@ import lombok.Setter;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "peice_collections")
-public class PeiceCollection {
+@Table(name = "piece_collections")
+public class PieceCollection {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "collection_id", nullable = false)

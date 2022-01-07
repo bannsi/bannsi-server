@@ -24,8 +24,8 @@ public class Item {
     private Long id;
     @Column(name = "content", nullable = true)
     private String content;
-    @Column(name = "peice_id", nullable = true)
-    private Long peiceId;
+    @Column(name = "piece_id", nullable = true)
+    private Long pieceId;
     @Column(name = "order_num", nullable = false)
     private Integer orderNum;
     @Column(name = "date", nullable = false)

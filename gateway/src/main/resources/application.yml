@@ -36,28 +36,3 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
 
-# server:
-#     port: 5555
-
-# spring:
-#     main:
-#         web-application-type: reactive
-#     application:
-#         name: gatewayservice
-#     profiles:
-#         active:
-#             default
-#     cloud:
-#         config:
-#             enabled: true
-#         gateway:
-#             routes:
-#                 - id: peiceservice
-#                   uri: lb://PEICESERVICE
-#                   predicates:
-#                     - Path=/peices/**
-#                 - id: accoutservice
-#                   uri: lb://ACCOUNTSERVICE
-#                   predicates:
-#                     - Path=/accounts/**
-                    

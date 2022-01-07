@@ -8,8 +8,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Peice {
-    private Long peiceId;
+public class Piece {
+    private Long pieceId;
     private String content;
     private Long latitude;
     private Long longitude;
