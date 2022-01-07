@@ -6,7 +6,7 @@ spring:
             default
     cloud:
         config:
-            uri: http://3.36.116.95:8888
+            uri: http://3.35.26.133:8888
 
 springdoc:
     packagesToScan: pl.piomin.services.department
