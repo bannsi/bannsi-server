@@ -1,0 +1,16 @@
+version: "1.0"
+
+services:
+  eureka:
+    image: zzzinho/bansi-eureka
+    ports:
+      - 8761:8761
+    restart: "always"
+
+  configsvr:
+    image: zzzinho/bansi-config
+    ports:
+      - 8888:8888
+    depends_on:
+      - eureka
+

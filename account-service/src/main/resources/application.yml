@@ -1,19 +1,25 @@
 eureka:
     instance:
         preferIpAddress: true
-        ipAddress: 13.209.41.14
+        # ipAddress: 13.209.41.14
     client:
         registerWithEureka: true
         fetchRegistry: true
         serviceUrl:
-            # defaultZone: http://localhost:8761/eureka/
-            defaultZone: http://13.209.41.14:8761/eureka/
+            defaultZone: http://localhost:8761/eureka/
+            # defaultZone: http://13.209.41.14:8761/eureka/
+
 management:
     endpoint:
         health:
             show-details: always
             diskspace:
-                enabled: true
+                enabled: trueq
         env:
             show-details: always
             enabled: true
+
+springdoc:
+    api-docs:
+        path: /accounts/v3/api-docs
+        

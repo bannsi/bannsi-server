@@ -5,8 +5,8 @@ eureka:
         registerWithEureka: true
         fetchRegistry: true
         serviceUrl:
-            # defaultZone: http://localhost:8761/eureka/
-            defaultZone: http://13.209.41.14:8761/eureka/
+            defaultZone: http://localhost:8761/eureka/
+            # defaultZone: http://13.209.41.14:8761/eureka/
             
 management:
     endpoints:
@@ -26,13 +26,19 @@ management:
             gateway:
                 enabled: true
 spring:
-  cloud:
-    gateway:
-      globalcors:
-        add-to-simple-url-handler-mapping: true
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedMethods: "*"
-            allowedHeaders: "*"
+    cloud:
+        config:
+            # uri: http://13.125.210.37:8888
+            uri: lb://CONFIGSERVER
+        gateway:
+            globalcors:
+                add-to-simple-url-handler-mapping: true
+                corsConfigurations:
+                    '[/**]':
+                        allowedOrigins: "*"
+                        allowedMethods: "*"
+                        allowedHeaders: "*"
 
+springdoc:
+    paths-to-match:
+    - /accounts/**

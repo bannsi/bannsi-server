@@ -4,9 +4,4 @@ spring:
     profiles:
         active:
             default
-    cloud:
-        config:
-            uri: http://13.125.210.37:8888
-
-springdoc:
-    packagesToScan: pl.piomin.services.department
+        

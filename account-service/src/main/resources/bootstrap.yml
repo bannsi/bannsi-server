@@ -6,4 +6,5 @@ spring:
             default
     cloud:
         config:
-            uri: http://13.125.210.37:8888
+            # uri: http://13.125.210.37:8888
+            uri: http://localhost:8888

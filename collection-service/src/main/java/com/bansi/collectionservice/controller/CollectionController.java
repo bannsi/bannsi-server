@@ -58,7 +58,7 @@ public class CollectionController {
     }
 
     @RequestMapping(value = "/{collectionId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getCollection(@PathVariable Long collectionId) throws IOException{
+    public ResponseEntity<ResponseDTO> getCollection(@PathVariable Long collectionId) throws IOException{
         PieceCollectionResponse collectionResponse = null;
         // collectionResponse = collectionService.getCollection(collectionId);    
         try {
