@@ -1,3 +1,6 @@
+server:
+  port: 50053
+
 eureka:
     instance:
         preferIpAddress: true

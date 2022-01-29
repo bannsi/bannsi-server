@@ -4,4 +4,8 @@ spring:
     profiles:
         active:
             default
+    cloud:
+        config:
+            uri: http://3.35.52.140:8888
+            # uri: lb://CONFIGSERVER
         

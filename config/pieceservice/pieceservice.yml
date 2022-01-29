@@ -1,9 +1,6 @@
 example:
   property: "bannsi piece service config"
 
-server:
-  port: 8081
-
 jwt:
   secret: "{cipher}426217b5624ea34eb0c621761df3f1c20f4fa668189597c9d08fd78ef1cf02a1"
   
