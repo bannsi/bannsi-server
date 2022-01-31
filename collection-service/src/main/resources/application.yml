@@ -4,7 +4,7 @@ server:
 eureka:
     instance:
         preferIpAddress: true
-        ipAddress: 3.35.218.98
+        ipAddress: 54.180.97.201
     client:
         registerWithEureka: true
         fetchRegistry: true
